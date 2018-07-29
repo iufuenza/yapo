@@ -1,0 +1,55 @@
+version: '0.1.0'
+
+# OPTIONAL
+build_web_cmds: &build_web_cmds
+- "docker volume create some_volume"
+- "docker-compose up --build web"
+
+build_all_cmds: &build_all_cmds
+- "docker volume create some_volume"
+- "docker-compose up --build web"
+
+run_cmds: &run_cmds
+- "docker-compose up web"
+
+remove_server_pid_cmds: &remove_server_pid_cmds
+- "rm -f /sylvester/tmp/pids/server.pid"
+
+docker_compose_run: &docker_compose_run
+- "docker-compose run web"
+
+test_cmds: &test_cmds
+- "docker-compose run web bundle exec rspec"
+
+exec_cmds: &exec_cmds
+- "echo 'exec something'"
+
+hello: &hello
+- "echo 'hello'"
+
+world: &world
+- "echo 'world'"
+
+# REQUIRED
+commands:
+  build:
+    - *remove_server_pid_cmds
+    - *build_web_cmds
+
+  run:
+    - *run_cmds
+
+  exec:
+    - *exec_cmds
+
+  test:
+    - *test_cmds
+
+  hello:
+    - *hello
+    - *world
+    - ["echo 'sipo'"]
+
+prepends:
+  docker:
+    command: *docker_compose_run

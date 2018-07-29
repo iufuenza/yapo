@@ -1,0 +1,59 @@
+version: '0.1.0'
+# OPTIONAL
+build: &build
+  - "echo You have to add a 'build' entry in .yapo.yml"
+
+run: &run
+  - "echo You have to add a 'run' entry in .yapo.yml"
+
+exec: &exec
+  - "echo You have to add a 'exec' entry in .yapo.yml"
+
+test: &test
+  - "echo You have to add a 'test' entry in .yapo.yml"
+
+testing_command: &testing_command
+  - "echo This command is for test only."
+  - "echo Testing..."
+
+testing_prepend: &testing_prepend
+  - "echo This prepend is for test only."
+
+empty_testing_command: &empty_testing_command
+
+incomplete_bash_command: &incomplete_bash_command
+  - "docker-compose invalid"
+
+invalid_bash_command: &invalid_bash_command
+  - "invalid bash command"
+
+# REQUIRED
+commands:
+  build:
+    - *build
+
+  run:
+    - *run
+
+  exec:
+    - *exec
+
+  test:
+    - *test
+
+  testing_command:
+    - *testing_command
+
+  empty_testing_command:
+    - *empty_testing_command
+
+  incomplete_bash_command:
+    - *incomplete_bash_command
+
+  invalid_bash_command:
+    - *invalid_bash_command
+
+prepends:
+  testing_prepend:
+    command:
+      - *testing_prepend
